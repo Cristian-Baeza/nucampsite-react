@@ -1,31 +1,12 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardImg,
-  CardImgOverlay,
-  CardTitle,
-} from "reactstrap";
-import CampsiteInfo from './CampsiteInfoComponent'
+import { Card, CardImg, CardImgOverlay, CardTitle } from "reactstrap";
 
 class Directory extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      //the constructor is the only place where you can set state (use '=' sign). Everywhere else use 'setState()' method
-      selectedCampsite: null,
-    };
-  }
-
-  onCampsiteSelect(campsite) {
-    this.setState({ selectedCampsite: campsite }); //not using '='. Have to use 'setState()' method as per the comment above
-  }
-
-
   render() {
     const directory = this.props.campsites.map((campsite) => {
       return (
         <div key={campsite.id} className="col-md-5 m-1">
-          <Card onClick={() => this.onCampsiteSelect(campsite)}>
+          <Card onClick={() => this.props.onClick(campsite.id)}>
             <CardImg width="100%" src={campsite.image} alt={campsite.name} />
             <CardImgOverlay>
               <CardTitle>{campsite.name}</CardTitle>
@@ -37,9 +18,7 @@ class Directory extends Component {
 
     return (
       <div className="container">
-        <div className="row">{directory}
-        </div>
-        <CampsiteInfo campsite={this.state.selectedCampsite} />
+        <div className="row">{directory}</div>
       </div>
     );
   }

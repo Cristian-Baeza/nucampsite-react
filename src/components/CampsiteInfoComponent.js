@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 
 class CampsiteInfo extends Component {
-
-
   //TASK 2
   renderCampsite(campsite) {
     return (
@@ -30,7 +28,12 @@ class CampsiteInfo extends Component {
             <div>
               <br />
               {comments.text} <br />
-              -- {comments.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comments.date)))}
+              -- {comments.author},{" "}
+              {new Intl.DateTimeFormat("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "2-digit",
+              }).format(new Date(Date.parse(comments.date)))}
             </div>
           ))}
         </div>
@@ -42,10 +45,12 @@ class CampsiteInfo extends Component {
   render() {
     if (this.props.campsite) {
       return (
-        <div className="row">
-          {this.renderCampsite(this.props.campsite)}
+        <div class="container">
+          <div className="row">
+            {this.renderCampsite(this.props.campsite)}
 
-          {this.renderComments(this.props.campsite.comments)}
+            {this.renderComments(this.props.campsite.comments)}
+          </div>
         </div>
       );
     } else {
