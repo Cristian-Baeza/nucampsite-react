@@ -38,7 +38,7 @@ function RenderCampsite({ campsite }) {
   );
 }
 
-function RenderComments({ comments, addComment, campsiteId }) {
+function RenderComments({ comments, postComment, campsiteId }) {
   if (comments) {
     return (
       <div className="col-md-5 m-1">
@@ -56,7 +56,7 @@ function RenderComments({ comments, addComment, campsiteId }) {
             }).format(new Date(Date.parse(comments.date)))}
           </div>
         ))}
-        <CommentForm campsiteId={campsiteId} addComment={addComment} />
+        <CommentForm campsiteId={campsiteId} postComment={postComment} />
       </div>
     );
   }
@@ -104,7 +104,7 @@ function CampsiteInfo(props) {
           <RenderCampsite campsite={props.campsite} />
           <RenderComments
             comments={props.comments}
-            addComment={props.addComment}
+            postComment={props.postComment}
             campsiteId={props.campsite.id}
           />
         </div>
@@ -140,7 +140,7 @@ class CommentForm extends Component {
 
   handleSubmit(values) {
     this.toggleModal();
-    this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
+    this.props.postComment(this.props.campsiteId, values.rating, values.author, values.text);
   }
 
   render() {
@@ -149,32 +149,6 @@ class CommentForm extends Component {
         <Button outline onClick={this.toggleModal}>
           <i className="fa fa-pencil fa-lg" />Submit Comment
       </Button>
-
-        {/* <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-          <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
-          <ModalBody>
-            <Form onSubmit={this.handleLogin}>
-              <FormGroup>
-                <Label htmlFor="username">Rating</Label>
-                <Input type="text" id="username" name="username"
-                  innerRef={input => this.username = input} />
-              </FormGroup>
-              <FormGroup>
-                <Label htmlFor="password">Your Name</Label>
-                <Input type="password" id="password" name="password"
-                  innerRef={input => this.password = input} />
-              </FormGroup>
-              <FormGroup check>
-                <Label check>
-                  <Input type="checkbox" name="remember"
-                    innerRef={input => this.remember = input} />
-                Remember me
-            </Label>
-              </FormGroup>
-              <Button type="submit" value="submit" color="primary">Login</Button>
-            </Form>
-          </ModalBody>
-        </Modal> */}
 
 
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
