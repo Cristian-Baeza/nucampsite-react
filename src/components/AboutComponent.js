@@ -8,9 +8,13 @@ import {
   Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
 
-function About(props) {
-  const partners = props.partners.map((currentPartner) => {
+
+
+function PartnerList(props) {
+  const partners = props.partners.partners.map((currentPartner) => {
     return <Media tag="li" key={currentPartner.id}>
       <RenderPartner partner={currentPartner}>
 
@@ -19,28 +23,82 @@ function About(props) {
     </Media>
   });
 
-  // TASK 2 week3 
-  //add props.partner?
-  function RenderPartner({ partner }) {
-    if (partner) {
-      return (
-        <React.Fragment>
-          <Media object src={partner.image} alt={partner.name}
-            width="150" />
-
-          <Media body className="ml-5 mb-4">
-            <Media heading>
-              {partner.name}
-            </Media>
-            {partner.description}
-          </Media>
-        </React.Fragment>
-      )
-    }
+  if (props.partners.isLoading) {
+    return <Loading />;
+  }
+  if (props.partners.errMess) {
     return (
-      <div></div>
+
+      <div className="col">
+        <h4>{props.partners.errMess}</h4>
+      </div>
+
     )
   }
+
+  return (
+    <div className="col mt-4">
+      <Media list>{partners}</Media>
+    </div>
+  )
+
+
+}
+
+function RenderPartner({ partner }) {
+  if (partner) {
+    return (
+      <React.Fragment>
+        <Media object src={baseUrl + partner.image} alt={partner.name}
+          width="150" />
+
+        <Media body className="ml-5 mb-4">
+          <Media heading>
+            {partner.name}
+          </Media>
+          {partner.description}
+        </Media>
+      </React.Fragment>
+    )
+  }
+  return (
+    <div></div>
+  )
+}
+
+
+
+function About(props) {
+  // const partners = props.partners.map((currentPartner) => {
+  //   return <Media tag="li" key={currentPartner.id}>
+  //     <RenderPartner partner={currentPartner}>
+
+  //     </RenderPartner>
+
+  //   </Media>
+  // });
+
+
+  // function RenderPartner({ partner }) {
+  //   if (partner) {
+  //     return (
+  //       <React.Fragment>
+  //         <Media object src={baseUrl + partner.image} alt={partner.name}
+  //           width="150" />
+
+  //         <Media body className="ml-5 mb-4">
+  //           <Media heading>
+  //             {partner.name}
+  //           </Media>
+  //           {partner.description}
+  //         </Media>
+  //       </React.Fragment>
+  //     )
+  //   }
+  //   return (
+  //     <div></div>
+  //   )
+  // }
 
   return (
     <div className="container">
@@ -111,9 +169,7 @@ function About(props) {
         <div className="col-12">
           <h3>Community Partners</h3>
         </div>
-        <div className="col mt-4">
-          <Media list>{partners}</Media>
-        </div>
+        <PartnerList partners={props.partners} />
       </div>
     </div>
   );
